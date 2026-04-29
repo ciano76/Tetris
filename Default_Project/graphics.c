@@ -11,7 +11,9 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "graphics.h"
+#include "lcd.h"
+
+
 
 // ILI9341 command codes
 #define ILI9341_SWRESET   0x01
@@ -37,30 +39,21 @@
 #define TFT_WIDTH   240
 #define TFT_HEIGHT  320
 
-// -----------------------------------------------------------------------------
-// Basic ILI9341 init
-// -----------------------------------------------------------------------------
 
-void ili9341_init(void)
-{
-    // Hardware reset should be done outside this function
-    // Here we just send the standard init sequence 
+void ili9341_set_rotation(uint8_t r);
+void ili9341_invert(bool inv);
+void ili9341_scroll(uint16_t y);
+void ili9341_scroll_margins(uint16_t top, uint16_t bottom);
+static void ili9341_set_addr_window(uint16_t x, uint16_t y, uint16_t w, uint16_t h);
+void ili9341_fill_screen(uint16_t color);
+void ili9341_fill_rect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color);
+void ili9341_draw_pixel(uint16_t x, uint16_t y, uint16_t color);
+static void draw_char(uint16_t x, uint16_t y, char c, uint16_t fg, uint16_t bg);
+void ili9341_draw_string(uint16_t x, uint16_t y,
+                         const char *s,
+                         uint16_t fg, uint16_t bg);
+uint16_t rgb565(uint8_t r, uint8_t g, uint8_t b);
 
-    lcd_cmd(ILI9341_SWRESET);
-    msec_delay(150);
-
-    lcd_cmd(ILI9341_SLPOUT);
-    msec_delay(150);
-
-    // Pixel format: 16-bit
-    lcd_cmd(ILI9341_COLMOD);
-    lcd_data(0x55);          // 16-bit/pixel
-    msec_delay(10);
-
-    // Display ON
-    lcd_cmd(ILI9341_DISPON);
-    msec_delay(100);
-}
 
 // -----------------------------------------------------------------------------
 // Rotation / inversion / scrolling

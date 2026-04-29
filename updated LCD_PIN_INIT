@@ -24,11 +24,11 @@ void lcd_pins_init(void)
    CONTROL PIN MACROS
    ================================ */
 
-#define CS_LOW()    (GPIOB->DOUTCLR31_0 = (1<<0))
-#define CS_HIGH()   (GPIOB->DOUTSET31_0 = (1<<0))
+#define CS_LOW()    (GPIOB->DOUTCLR31_0 = (1<<6))
+#define CS_HIGH()   (GPIOB->DOUTSET31_0 = (1<<6))
 
-#define DC_LOW()    (GPIOB->DOUTCLR31_0 = (1<<6))
-#define DC_HIGH()   (GPIOB->DOUTSET31_0 = (1<<6))
+#define DC_LOW()    (GPIOB->DOUTCLR31_0 = (1<<0))
+#define DC_HIGH()   (GPIOB->DOUTSET31_0 = (1<<0))
 
 #define RESET_LOW()  (GPIOB->DOUTCLR31_0 = (1<<1))
 #define RESET_HIGH() (GPIOB->DOUTSET31_0 = (1<<1))

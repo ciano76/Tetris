@@ -142,7 +142,7 @@ void ili9341_fill_screen(uint16_t color)
     ili9341_set_addr_window(0, 0, TFT_WIDTH, TFT_HEIGHT);
 
     for (i = 0; i < total; i++) {
-        spi1_write_data(color);
+        spi1_write16(color);
     }
 }
 

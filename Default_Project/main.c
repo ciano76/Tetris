@@ -34,6 +34,7 @@
 #include "LaunchPad.h"
 #include "graphics.h"
 #include "lcd.h"
+#include "spi.h"
 
 //-----------------------------------------------------------------------------
 // Define function prototypes used by the program
@@ -69,19 +70,17 @@ int main(void)
   // Configure the LaunchPad board
   clock_init_40mhz();
   launchpad_gpio_init();
+  lcd_pins_init();
   spi1_init();
 
   // enter your code here
-  lcd_pins_init();
+
   ili9341_init();
+  
+  spi1_write_data(20);
 
-  ili9341_set_addr_window(0, 0, TFT_WIDTH, TFT_HEIGHT);
 
-
-  for(int i = 0; i<= 1000; i++){
-    spi1_write16(RED);
-  }
-
+  ili9341_fill_screen(RED);
   
 
  // Endless loop to prevent program from ending

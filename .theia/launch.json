@@ -50,6 +50,24 @@
                 "name": "Default_Project",
                 "resourceId": "/Default_Project/graphics.c"
             }
+        },
+        {
+            "name": "Default_Project (5)",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "Default_Project",
+                "resourceId": "/Default_Project/ticlang"
+            }
+        },
+        {
+            "name": "Default_Project (6)",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "Default_Project",
+                "resourceId": "/Default_Project/spi.c"
+            }
         }
     ]
 }

@@ -52,8 +52,7 @@ void ili9341_scroll_margins(uint16_t top, uint16_t bottom);
 // Address window and primitive drawing
 // -----------------------------------------------------------------------------
 
-static void ili9341_set_addr_window(uint16_t x, uint16_t y,
-                                    uint16_t w, uint16_t h);
+void ili9341_set_addr_window(uint16_t x, uint16_t y,uint16_t w, uint16_t h);
 
 
 void ili9341_fill_screen(uint16_t color);

@@ -68,6 +68,15 @@
                 "name": "Default_Project",
                 "resourceId": "/Default_Project/spi.c"
             }
+        },
+        {
+            "name": "Default_Project (7)",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "Default_Project",
+                "resourceId": "/Default_Project/LaunchPad.h"
+            }
         }
     ]
 }

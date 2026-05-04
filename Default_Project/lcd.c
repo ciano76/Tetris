@@ -48,34 +48,21 @@ void ili9341_init(void);
 
 void lcd_pins_init(void)
 {
-    // --- SPI1 Pins ---
-    // PB8 = MOSI
-    IOMUX->SECCFG.PINCM[8] = 0x00000021;
-
-    // PB9 = SCK
-    IOMUX->SECCFG.PINCM[9] = 0x00000021;
-
-    // PB7 = MISO (not used)
-    IOMUX->SECCFG.PINCM[7] = 0x00000021;
-
-    // --- Control Pins ---
-
     // PB6 = CS
     IOMUX->SECCFG.PINCM[6] = 0x00000081;
-    GPIOB->DOESET31_0 = (1<<0);
-    GPIOB->DOUTSET31_0 = (1<<0);   // CS HIGH (idle)
+    GPIOB->DOESET31_0 = (1<<6);
+    GPIOB->DOUTSET31_0 = (1<<6);
 
     // PB0 = DC
     IOMUX->SECCFG.PINCM[0] = 0x00000081;
-    GPIOB->DOESET31_0 = (1<<6);
-    GPIOB->DOUTSET31_0 = (1<<6);   // DC HIGH (idle)
+    GPIOB->DOESET31_0 = (1<<0);
+    GPIOB->DOUTSET31_0 = (1<<0);
 
     // PB1 = RESET
     IOMUX->SECCFG.PINCM[1] = 0x00000081;
     GPIOB->DOESET31_0 = (1<<1);
-    GPIOB->DOUTSET31_0 = (1<<1);   // RESET HIGH (idle)
+    GPIOB->DOUTSET31_0 = (1<<1);
 }
-
 /* ================================
    CONTROL PIN MACROS
    ================================ */

@@ -74,11 +74,8 @@ int main(void)
   spi1_init();
 
   // enter your code here
-
   ili9341_init();
   
-  spi1_write_data(20);
-
 
   ili9341_fill_screen(RED);
   

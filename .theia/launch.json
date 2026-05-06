@@ -1,82 +1,14 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "CCS Debug",
-            "type": "ccs-debug",
-            "request": "launch"
-        },
-        {
-            "name": "Default_Project",
-            "type": "ccs-debug",
-            "request": "launch",
-            "projectInfo": {
-                "name": "Default_Project",
-                "resourceId": "/Default_Project"
-            }
-        },
-        {
-            "name": "Default_Project (1)",
-            "type": "ccs-debug",
-            "request": "launch",
-            "projectInfo": {
-                "name": "Default_Project",
-                "resourceId": "/Default_Project/lcd.c"
-            }
-        },
-        {
-            "name": "Default_Project (2)",
-            "type": "ccs-debug",
-            "request": "launch",
-            "projectInfo": {
-                "name": "Default_Project",
-                "resourceId": "/Default_Project/main.c"
-            }
-        },
-        {
-            "name": "Default_Project (3)",
-            "type": "ccs-debug",
-            "request": "launch",
-            "projectInfo": {
-                "name": "Default_Project",
-                "resourceId": "/Default_Project/graphics.h"
-            }
-        },
-        {
-            "name": "Default_Project (4)",
-            "type": "ccs-debug",
-            "request": "launch",
-            "projectInfo": {
-                "name": "Default_Project",
-                "resourceId": "/Default_Project/graphics.c"
-            }
-        },
-        {
-            "name": "Default_Project (5)",
-            "type": "ccs-debug",
-            "request": "launch",
-            "projectInfo": {
-                "name": "Default_Project",
-                "resourceId": "/Default_Project/ticlang"
-            }
-        },
-        {
-            "name": "Default_Project (6)",
-            "type": "ccs-debug",
-            "request": "launch",
-            "projectInfo": {
-                "name": "Default_Project",
-                "resourceId": "/Default_Project/spi.c"
-            }
-        },
-        {
-            "name": "Default_Project (7)",
-            "type": "ccs-debug",
-            "request": "launch",
-            "projectInfo": {
-                "name": "Default_Project",
-                "resourceId": "/Default_Project/LaunchPad.h"
-            }
-        }
-    ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Main_Project",
+      "type": "ccs-debug",
+      "request": "launch",
+      "projectInfo": {
+        "name": "Main_Project",
+        "resourceId": "/Main_Project"
+      }
+    }
+  ]
 }

@@ -72,7 +72,7 @@ int main(void)
   launchpad_gpio_init();
   lcd_pins_init();
   spi1_init();
-
+  
   // enter your code here
   ili9341_init();
   

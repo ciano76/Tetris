@@ -48,6 +48,13 @@ void ili9341_init(void);
 
 void lcd_pins_init(void)
 {
+
+    IOMUX->SECCFG.PINCM[LP_SPI_CS0_IOMUX] =
+        (IOMUX_PINCM_PC_CONNECTED | IOMUX_PINCM23_PF_GPIOB_DIO06);
+
+    GPIOB->DOE31_0 |= LP_SPI_CS0_MASK;
+
+    
     // PB6 = CS
     IOMUX->SECCFG.PINCM[6] = 0x00000081;
     GPIOB->DOESET31_0 = (1<<6);

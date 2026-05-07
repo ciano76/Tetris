@@ -1,14 +1,4 @@
 {
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Main_Project",
-      "type": "ccs-debug",
-      "request": "launch",
-      "projectInfo": {
-        "name": "Main_Project",
-        "resourceId": "/Main_Project"
-      }
-    }
-  ]
+    "version": "0.2.0",
+    "configurations": []
 }

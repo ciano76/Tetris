@@ -60,8 +60,6 @@ int main(void)
 
 
 
-
-
 } /* main */
 
 
@@ -76,6 +74,7 @@ int start_menu(void)
   lcd_set_ddram_addr(LCD_LINE2_ADDR);
   lcd_write_string("Press PB1 to Select.")
   while(!g_pb2_pressed){}
+  g_pb2_pressed = false;
 
   while(!done)
   {

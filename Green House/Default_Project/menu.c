@@ -1,144 +1,139 @@
 //*****************************************************************************
 //*****************************    C Source Code    ***************************
 //*****************************************************************************
-//   DESIGNERS NAME:  Oreste & Marciano
-//        FILE NAME:  temp_hum.c  
-//*****************************************************************************
-//*****************************************************************************
+//  DESIGNER NAME:  Oreste RUiz
+//
+//      FILE NAME:  menu.c
+//
+//-----------------------------------------------------------------------------
 
-// == STANARD C INCLUDE FILES ==
+//-----------------------------------------------------------------------------
+// Loads standard C include files
+//-----------------------------------------------------------------------------
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-// ==  LOADS MSP LAUNCHPAD BOARD SUPPORT MACROS AND DEFINITIONS == 
+//-----------------------------------------------------------------------------
+// Loads MSP launchpad board support macros and definitions
+//-----------------------------------------------------------------------------
 #include "LaunchPad.h"
-#include "adc.h"
 #include "clock.h"
 #include "lcd1602.h"
 #include <ti/devices/msp/msp.h>
 
-// == FUNCTION PROTOTYPES == 
-void loop(void);
+//-----------------------------------------------------------------------------
+// Define function prototypes used by the program
+//-----------------------------------------------------------------------------
 void config_pb1_interrupt(void);
 void config_pb2_interrupt(void);
-float convert_to_fahrenheit(float celcius);
-
-// == SYMBOLIC CONSTANTS ==
-#define TEMP_CHANNEL 5
-#define PROGRAM_END_DELAY  1000
-#define BUTTON_DELAY 20
-
-// == GLOBAL VARIABLES ==
-bool g_pb1_pressed = false;
-bool g_pb2_pressed = false;
 
 
-int test(void)
+
+
+typedef enum
 {
-  // == CONFIGURE ==
+  HOME,
+  TEMP,
+  HUMIDITY
+} menu_state;
+
+
+int main(void)
+{
+  // Configure the LaunchPad board
   clock_init_40mhz();
   launchpad_gpio_init();
-  dipsw_init();
   I2C_mstr_init();
   lcd1602_init();
 
-  // == INTERRUPTS ==
+
+  // == INTERUPTS ==
   config_pb1_interrupt();
   config_pb2_interrupt();
-  
-  // == LOOP ==
-  //  - TODO: add humidity on line 1? 
-  //  - display current temp on line 2, updates by pressing PB2
-  loop();
 
+  start_menu();
 
-  // CLEANUP
+  // == CLEANUP ==
   NVIC_DisableIRQ(GPIOA_INT_IRQn);
   NVIC_DisableIRQ(GPIOB_INT_IRQn);
 
-  while (1);
+
+
+
+
 } /* main */
 
-//-----------------------------------------------------------------------------
-// DESCRIPTION:
-//  This function displays the temperature from the temperature sensor on
-//  line 2 of the LCD. Pressing PB2 updates the temperature. It is displayed in
-//  Fahrenheit
-// -----------------------------------------------------------------------------
-void loop(void)
+
+int start_menu(void)
 {
+
+  menu_state current_state = HOME;
+  bool done = false;
 
   lcd_clear();
+  lcd_write_string("Press PB2 to Cycle Menu.");
+  lcd_set_ddram_addr(LCD_LINE2_ADDR);
+  lcd_write_string("Press PB1 to Select.")
+  while(!g_pb2_pressed){}
 
-  bool done = false;
-  uint32_t temp_raw;
-  float temp;
-
-  while (!done)
+  while(!done)
   {
+    lcd_clear();
 
-    ADC0_init(ADC12_MEMCTL_VRSEL_VDDA_VSSA);
-    uint32_t pot_raw = ADC0_in(POT_CHANNEL);
-
-    // == DISPLAY TEMPERATURE ==
-    lcd_set_ddram_addr(LCD_LINE2_ADDR);
-    lcd_write_string("Temp = ");
-    lcd_write_byte(convert_to_fahrenheit(temp));
-    lcd_write_char(0xDF);
-    lcd_write_string("F");
-
-    // == UPDATE TEMP IF PB2 PRESSED ==
-    if(g_pb2_pressed) 
+    switch(current_state)
     {
-      temp_raw   = ADC0_in(TEMP_CHANNEL);
-      temp = thermistor_calc_temperature(temp_raw);
-      g_pb2_pressed = false;
-      msec_delay(BUTTON_DELAY);
-    }
 
-    // == STOP PROGRAM WHEN PB1 is PRESSED ==
-    if (g_pb1_pressed)
-    {
-      done = true;
-      lcd_clear();
-      lcd_write_string("Program Stopped.");
-      msec_delay(PROGRAM_END_DELAY);
-      leds_off();
-      g_pb1_pressed = false;
-    }
-  }
-} /* loop */
+      case HOME:
+        // == LCD ==
+        lcd_write_string("Welcome to the Greenhouse.")
 
-//-----------------------------------------------------------------------------
-// DESCRIPTION:
-//    This function takes in a celcius temperature value as a float and returns 
-//    the equivalent fahreneheit value as a float
-//
-// INPUT PARAMETERS:
-//    celcius - temperature in celcius
-//
-// RETURN:
-//    float - temperature converted to celcius
-// -----------------------------------------------------------------------------
-float convert_to_fahrenheit(float celcius)
-{
-  if(celcius == 0){
-    return (0);
-  }
-  return (celcius * 1.8) + 32;  
-} /* convert_to_fahrenheit */
+        // == INTERRUPT ==
+        if(g_pb2_pressed)
+        {
+          current_state = TEMP;
+          g_pb2_pressed = false;
+          msec_delay(10);
+        }/*if*/
+
+        break;
+      case TEMP;
+        // == LCD ==
+        lcd_write_string("1. VIEW TEMPERATURE");
+
+        // == INTERRUPTS ==
+        if(g_pb1_pressed)
+        {
+          lcd_clear();
+          lcd_write_string("Current Temperature")
+          lcd_set_ddram_addr(LCD_LINE2_ADDR);
+          lcd_write_string("Value: ");
+        }
+        
+        if(g_pb2_pressed)
+        {
+          current_state = HUMIDITY;
+          g_pb2_pressed = false;
+          g_pb1_pressed = false;
+          msec_delay(10);
+        }
+        break;
+        
+    } /* switch */
+  } /* while */
+
+
+} /* start_menu() */
+
+
+
+
+
 
 
 //-----------------------------------------------------------------------------
 // DESCRIPTION:
 //    Sets up an interrupt for when Push Button 1 is pressed
-//
-// INPUT PARAMETERS:
-//    None
-//
-// RETURN:
-//    None
 // -----------------------------------------------------------------------------
 void config_pb1_interrupt(void)
 {
@@ -153,9 +148,9 @@ void config_pb1_interrupt(void)
 
   NVIC_SetPriority(GPIOB_INT_IRQn, 2);
   NVIC_EnableIRQ(GPIOB_INT_IRQn);
-}
+} /* config_pb1_interrupt */
 
-// -----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 // DESCRIPTION:
 //    Sets up an interrupt for when Push Button 2 is pressed
 // -----------------------------------------------------------------------------
@@ -172,7 +167,7 @@ void config_pb2_interrupt(void)
 
   NVIC_SetPriority(GPIOA_INT_IRQn, 2);
   NVIC_EnableIRQ(GPIOA_INT_IRQn);
-}
+} /* config_pb2_interrupt */
 
 void GROUP1_IRQHandler(void)
 {
